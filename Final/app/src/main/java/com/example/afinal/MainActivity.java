@@ -16,8 +16,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.READ_CONTACTS},1);
-        ContactRepository r = new ContactRepository(this);
-        TextView t = (TextView)findViewById(R.id.tv_test);
-        t.setText(((Contact)r.getContactsList().get(0)).getName());
+//        ContactRepository r = new ContactRepository(this);
+//        TextView t = (TextView)findViewById(R.id.tv_test);
+//        t.setText(((Contact)r.getContactsList().get(0)).getName());
     }
 }
