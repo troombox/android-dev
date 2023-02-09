@@ -2,6 +2,7 @@ package com.example.afinal;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.Application;
 import android.content.ContentResolver;
 import android.database.Cursor;
 import android.provider.ContactsContract;
@@ -16,6 +17,10 @@ public class ContactRepository {
     public ContactRepository(Activity a){
         this.a = a;
         c = new ArrayList<>();
+    }
+
+    public ContactRepository(Application app){
+        this((Activity)app.getApplicationContext());
     }
 
     @SuppressLint("Range")
