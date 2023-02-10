@@ -1,6 +1,8 @@
 package com.example.afinal;
 
+import android.app.Activity;
 import android.app.Application;
+import android.content.Context;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -18,7 +20,6 @@ public class ContactViewModel extends AndroidViewModel {
 
     //
     private Application _app;
-    private ContactRepository _cRep;
 
     public ContactViewModel(@NonNull Application application) {
         //init
@@ -26,10 +27,9 @@ public class ContactViewModel extends AndroidViewModel {
         _app = application;
 
         //prepare data
-        _cRep = new ContactRepository(_app);
         _contactsArrayLiveData = new MutableLiveData<>();
         _selectedPositionLiveData = new MutableLiveData<>();
-        _contactsArray = _cRep.getContactsList();
+        _contactsArray = new ArrayList<>();
         _selectedPosition = Integer.valueOf(-1);
         //set live data
         _contactsArrayLiveData.setValue(_contactsArray);
@@ -42,5 +42,14 @@ public class ContactViewModel extends AndroidViewModel {
 
     public MutableLiveData<Integer> getSelectedPositionLiveData() {
         return _selectedPositionLiveData;
+    }
+
+    public void initViewModelFromRepository(ContactRepository cr){
+        _contactsArray = cr.getContactsList();
+        _contactsArrayLiveData.setValue(_contactsArray);
+    }
+
+    public interface ShareModel{
+        ContactViewModel shareModel();
     }
 }
