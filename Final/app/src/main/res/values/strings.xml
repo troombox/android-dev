@@ -4,4 +4,5 @@
     <string name="preference_option_remember_removed">Remember Removed Contacts</string>
     <string name="preference_option_remember_history">Remember Contacts History</string>
     <string name="preference_option_remember_preference">Remember Contacts Preferences</string>
+    <string name="preference_option_test_data">Load test data on start</string>
 </resources>

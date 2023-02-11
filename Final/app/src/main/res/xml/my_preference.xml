@@ -1,15 +1,25 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <CheckBoxPreference
-        android:defaultValue="false"
-        android:key="preference_cb_rememberContactsRemoved"
-        android:title="@string/preference_option_remember_removed" />
-    <CheckBoxPreference
-        android:defaultValue="false"
-        android:key="preference_cb_rememberContactsMessageHistory"
-        android:title="@string/preference_option_remember_history" />
-    <CheckBoxPreference
-        android:defaultValue="false"
-        android:key="preference_cb_rememberContactsPreference"
-        android:title="@string/preference_option_remember_preference" />
+    <PreferenceCategory android:title="Contacts Setting">
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="preference_cb_rememberContactsRemoved"
+            android:title="@string/preference_option_remember_removed" />
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="preference_cb_rememberContactsMessageHistory"
+            android:title="@string/preference_option_remember_history" />
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="preference_cb_rememberContactsPreference"
+            android:title="@string/preference_option_remember_preference" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="Test Settings">
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="preference_test_sw_loadTestData"
+            android:title="@string/preference_option_test_data" />
+    </PreferenceCategory>
 </PreferenceScreen>
