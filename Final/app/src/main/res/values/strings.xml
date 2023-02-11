@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Final</string>
     <string name="placeholder">placeholder</string>
+    <string name="preference_option_remember_removed">Remember Removed Contacts</string>
+    <string name="preference_option_remember_history">Remember Contacts History</string>
+    <string name="preference_option_remember_preference">Remember Contacts Preferences</string>
 </resources>

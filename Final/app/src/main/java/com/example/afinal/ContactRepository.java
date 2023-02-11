@@ -61,8 +61,8 @@ public class ContactRepository {
 
     public ArrayList<Contact> getTestContactData(){
         ArrayList<Contact> list = new ArrayList<>();
-        for(int i = 0; i < 10; i++){
-            Contact contact = new Contact("Semion Rudman" +" " + Integer.toString(i), "0545441589");
+        for(int i = 0; i < 15; i++){
+            Contact contact = new Contact("Semion Rudman" +" " + Integer.toString(i), "0545441000");
             list.add(contact);
         }
         return list;

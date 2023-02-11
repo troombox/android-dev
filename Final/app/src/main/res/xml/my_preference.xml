@@ -1,0 +1,15 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="preference_cb_rememberContactsRemoved"
+        android:title="@string/preference_option_remember_removed" />
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="preference_cb_rememberContactsMessageHistory"
+        android:title="@string/preference_option_remember_history" />
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="preference_cb_rememberContactsPreference"
+        android:title="@string/preference_option_remember_preference" />
+</PreferenceScreen>
