@@ -21,6 +21,7 @@ import java.util.ArrayList;
 public class RecycleFragment extends Fragment {
 
     private ContactViewModel _model;
+    private RecycleListener _listener;
 
     public RecycleFragment() {
         // Required empty public constructor
@@ -36,6 +37,7 @@ public class RecycleFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
+        this._listener = (RecycleListener) context;
     }
 
     @Override
@@ -55,7 +57,7 @@ public class RecycleFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         RecyclerView rvContacts = (RecyclerView)view.findViewById(R.id.rvContacts);
         _model = ((ContactViewModel.ShareModel)(view.getContext())).shareModel();
-        ContactsAdapter adapter = new ContactsAdapter(_model);
+        ContactsAdapter adapter = new ContactsAdapter(_model, _listener);
         // Attach the adapter to the recyclerview to populate items
         rvContacts.setAdapter(adapter);
         // Set layout manager to position the items
@@ -77,7 +79,7 @@ public class RecycleFragment extends Fragment {
     }
 
     interface RecycleListener{
-        void OnClickEvent();
+        void onClickEvent();
     }
 
 }

@@ -5,6 +5,7 @@ package com.example.afinal;
 import android.Manifest;
 import android.app.Activity;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -20,10 +21,11 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentContainerView;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceFragmentCompat;
 
-public class MainActivity extends AppCompatActivity implements ContactViewModel.ShareModel {
+public class MainActivity extends AppCompatActivity implements ContactViewModel.ShareModel, RecycleFragment.RecycleListener {
 
     private static final int REQUEST_PERMISSIONS_REQUEST_READ_CONTACTS = 0;
     private static final int REQUEST_PERMISSIONS_REQUEST_SEND_SMS = 1;
@@ -37,22 +39,12 @@ public class MainActivity extends AppCompatActivity implements ContactViewModel.
 
         ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.READ_CONTACTS},REQUEST_PERMISSIONS_REQUEST_READ_CONTACTS);
 
-//        if(ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED){
-//            Toast.makeText(getApplicationContext(), "Permission",
-//                    Toast.LENGTH_LONG).show();
-//            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.SEND_SMS},REQUEST_PERMISSIONS_REQUEST_SEND_SMS);
-//        } else {
-//            Toast.makeText(getApplicationContext(), "SMS sent.",
-//                    Toast.LENGTH_LONG).show();
-//            SmsSender s = new SmsSender();
-//            s.sendSms(null,null);
-//
-//        }
-            SmsSender s = new SmsSender(this);
-            s.sendSms(null,null);
-
         _model = new ViewModelProvider(this).get(ContactViewModel.class);
         _model.initViewModelFromRepository(new ContactRepository(this));
+
+        DataFragment countryDataFragment = (DataFragment) getSupportFragmentManager().findFragmentByTag("CDF");
+        FragmentContainerView fragmentContainerViewDetails = (FragmentContainerView) findViewById(R.id.fragmentContainerView);
+
     }
 
     @Override
@@ -74,6 +66,22 @@ public class MainActivity extends AppCompatActivity implements ContactViewModel.
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    //RecycleListener implementation:
+    @Override
+    public void onClickEvent() {
+        DataFragment contactDataFragment;
+//        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT)
+//        {
+            getSupportFragmentManager().beginTransaction()
+                    .setReorderingAllowed(true)
+                    .add(R.id.fragmentContainerView, DataFragment.class, null,"CDF")
+                    .addToBackStack("BBB")
+                    .commit();
+            getSupportFragmentManager().executePendingTransactions();
+//        }
+        contactDataFragment = (DataFragment) getSupportFragmentManager().findFragmentByTag("CDF");
     }
 
     public static class MyPreferences extends PreferenceFragmentCompat{

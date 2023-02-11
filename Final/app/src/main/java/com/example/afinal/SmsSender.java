@@ -10,11 +10,11 @@ import androidx.core.app.ActivityCompat;
 
 public class SmsSender {
 
-    private Activity _act;
-
-    public SmsSender(Activity activity){
-        _act = activity;
-    }
+//    private Activity _act;
+//
+//    public SmsSender(Activity activity){
+//        _act = activity;
+//    }
 
     public void sendSms(String phoneNum, String smsText){
         //setup for sms data
@@ -26,15 +26,15 @@ public class SmsSender {
         if(smsText != null){
             message = smsText;
         }
-//        SmsManager smsManager = SmsManager.getDefault();
-//        smsManager.sendTextMessage(phoneNumber, null, message,null,null);
+        SmsManager smsManager = SmsManager.getDefault();
+        smsManager.sendTextMessage(phoneNumber, null, message,null,null);
 
-        Intent i = new Intent(Intent.ACTION_VIEW);
-        i.setData(Uri.parse("smsto:"));
-        i.setType("vnd.android-dir/mms-sms");
-        i.putExtra("address", phoneNumber);
-        i.putExtra("sms_body",message);
-        _act.startActivity(Intent.createChooser(i, "Send sms via:"));
+//        Intent i = new Intent(Intent.ACTION_VIEW);
+//        i.setData(Uri.parse("smsto:"));
+//        i.setType("vnd.android-dir/mms-sms");
+//        i.putExtra("address", phoneNumber);
+//        i.putExtra("sms_body",message);
+//        _act.startActivity(Intent.createChooser(i, "Send sms via:"));
     }
 
 }

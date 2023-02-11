@@ -19,8 +19,11 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
     private List<Contact> _contacts;
     private int _pos;
 
-    public ContactsAdapter(ContactViewModel cvm){
+    private RecycleFragment.RecycleListener _listener;
+
+    public ContactsAdapter(ContactViewModel cvm, RecycleFragment.RecycleListener listener){
         _model = cvm;
+        _listener = listener;
         _contacts = cvm.getContactsArrayLiveData().getValue();
     }
 
@@ -85,6 +88,7 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
                 @Override
                 public void onClick(View view) {
                     _model.setSelected(c);
+                    _listener.onClickEvent();
                     notifyDataSetChanged();
                 }
             });
