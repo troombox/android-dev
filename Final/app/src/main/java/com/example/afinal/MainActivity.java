@@ -27,8 +27,8 @@ import androidx.preference.PreferenceFragmentCompat;
 
 public class MainActivity extends AppCompatActivity implements ContactViewModel.ShareModel, RecycleFragment.RecycleListener {
 
-    private static final int REQUEST_PERMISSIONS_REQUEST_READ_CONTACTS = 0;
-    private static final int REQUEST_PERMISSIONS_REQUEST_SEND_SMS = 1;
+    static final int REQUEST_PERMISSIONS_REQUEST_READ_CONTACTS = 0;
+    static final int REQUEST_PERMISSIONS_REQUEST_SEND_SMS = 1;
 
     ContactViewModel _model;
 
@@ -37,15 +37,40 @@ public class MainActivity extends AppCompatActivity implements ContactViewModel.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.READ_CONTACTS},REQUEST_PERMISSIONS_REQUEST_READ_CONTACTS);
-
-        _model = new ViewModelProvider(this).get(ContactViewModel.class);
-        _model.initViewModelFromRepository(new ContactRepository(this));
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
+            recycleViewInitOnStart();
+        } else {
+            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.READ_CONTACTS},REQUEST_PERMISSIONS_REQUEST_READ_CONTACTS);
+        }
 
         DataFragment countryDataFragment = (DataFragment) getSupportFragmentManager().findFragmentByTag("CDF");
         FragmentContainerView fragmentContainerViewDetails = (FragmentContainerView) findViewById(R.id.fragmentContainerView);
 
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case REQUEST_PERMISSIONS_REQUEST_READ_CONTACTS:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    recycleViewInitOnStart();
+                }
+                return;
+        }
+    }
+
+    private void recycleViewInitOnStart(){
+        _model = new ViewModelProvider(this).get(ContactViewModel.class);
+        _model.initViewModelFromRepository(new ContactRepository(this));
+        getSupportFragmentManager().beginTransaction()
+                .setReorderingAllowed(true)
+                .add(R.id.fragmentContainerView, RecycleFragment.class, null,"RFC")
+                .addToBackStack("BBB")
+                .commit();
+        getSupportFragmentManager().executePendingTransactions();
+    }
+
 
     @Override
     public ContactViewModel shareModel() {

@@ -9,7 +9,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/list_entry">
+        android:background="@drawable/list_entry"
+        android:clickable="true">
 
         <Button
             android:id="@+id/f_data_btn_sendSms"
