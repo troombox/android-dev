@@ -45,7 +45,8 @@ public class ContactViewModel extends AndroidViewModel {
     }
 
     public void initViewModelFromRepository(ContactRepository cr){
-        _contactsArray = cr.getContactsList();
+//        _contactsArray = cr.getContactsList();
+        _contactsArray = cr.getTestContactData();
         _contactsArrayLiveData.setValue(_contactsArray);
     }
 

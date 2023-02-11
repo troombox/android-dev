@@ -59,4 +59,13 @@ public class ContactRepository {
         return c;
     }
 
+    public ArrayList<Contact> getTestContactData(){
+        ArrayList<Contact> list = new ArrayList<>();
+        for(int i = 0; i < 10; i++){
+            Contact contact = new Contact("Semion Rudman" +" " + Integer.toString(i), "0545441589");
+            list.add(contact);
+        }
+        return list;
+    }
+
 }
