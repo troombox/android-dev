@@ -1,7 +1,6 @@
 package com.example.afinal;
 
 
-
 import android.Manifest;
 import android.app.Activity;
 import android.content.pm.PackageManager;
@@ -110,7 +109,6 @@ public class MainActivity extends AppCompatActivity implements ContactViewModel.
     }
 
     public static class MyPreferences extends PreferenceFragmentCompat{
-
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
