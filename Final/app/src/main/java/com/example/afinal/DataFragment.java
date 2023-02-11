@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 public class DataFragment extends Fragment {
 
+    FactDispenser _fd;
 
     public DataFragment() {
         // Required empty public constructor
@@ -48,12 +49,16 @@ public class DataFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        _fd = new FactDispenser(view.getContext());
+
         view.findViewById(R.id.f_data_btn_sendSms).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (ContextCompat.checkSelfPermission(view.getContext(), Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED) {
                     SmsSender s = new SmsSender();
-                    s.sendSms(null,null);
+//                    s.sendSms(null,null);
+                    s.sendSms("0545477901", _fd.getRandomFact(Fact.FACT_TYPE_CAT).getFactText());
                     Toast.makeText(view.getContext(),"SMS sent", Toast.LENGTH_LONG).show();
                 } else {
                     ActivityCompat.requestPermissions((Activity) view.getContext(), new String[]{Manifest.permission.SEND_SMS},REQUEST_PERMISSIONS_REQUEST_SEND_SMS);

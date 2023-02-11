@@ -10,6 +10,7 @@ public class FactDispenser {
     Context _context;
     ArrayList<Fact> _catFacts;
     ArrayList<Fact> _dogFacts;
+    Random random = new Random();
 
     public FactDispenser(Context c){
         _context = c;
@@ -17,7 +18,6 @@ public class FactDispenser {
     }
 
     public Fact getRandomFact(int factType){
-        Random random = new Random();
         int maxInt;
         ArrayList<Fact> target;
         if(factType == Fact.FACT_TYPE_CAT){

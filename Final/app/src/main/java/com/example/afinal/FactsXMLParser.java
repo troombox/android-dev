@@ -18,8 +18,8 @@ public class FactsXMLParser {
 	final static String KEY_ID="id";
 	final static String KEY_TEXT="text";
 
-	public static final String FACTS_FILE_CAT = "facts_cat";
-	public static final String FACTS_FILE_DOG = "facts_dog";
+	public static final String FACTS_FILE_CAT = "facts_cat.xml";
+	public static final String FACTS_FILE_DOG = "facts_dog.xml";
 
 	public static ArrayList<Fact> parseFacts(Context context, String factsFileType){
 		ArrayList<Fact> data = null;
