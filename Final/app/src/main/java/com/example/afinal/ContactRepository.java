@@ -9,10 +9,12 @@ import android.database.Cursor;
 import android.provider.ContactsContract;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 public class ContactRepository {
     ArrayList<Contact> c;
-
     Activity a;
 
     public ContactRepository(Activity a){
@@ -22,10 +24,11 @@ public class ContactRepository {
 
     @SuppressLint("Range")
     private void populateContactsList() {
+        //HashSet used to avoid duplicate contacts, using .equals() in Contact class
+        TreeSet<Contact> contactHashSet = new TreeSet<Contact>();
         ContentResolver cr = a.getContentResolver();
         Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI,
                 null, null, null, null);
-
         if ((cur != null ? cur.getCount() : 0) > 0) {
             while (cur != null && cur.moveToNext()) {
                 String id = cur.getString(cur.getColumnIndex(ContactsContract.Contacts._ID));
@@ -39,7 +42,7 @@ public class ContactRepository {
                     while (pCur.moveToNext()) {
                         String phoneNo = pCur.getString(pCur.getColumnIndex(
                                 ContactsContract.CommonDataKinds.Phone.NUMBER));
-                        this.c.add(new Contact(name,phoneNo));
+                        contactHashSet.add(new Contact(name,phoneNo));
                     }
                     pCur.close();
                 }
@@ -48,6 +51,7 @@ public class ContactRepository {
         if(cur!=null){
             cur.close();
         }
+        c.addAll(contactHashSet);
     }
 
     public ArrayList<Contact> getContactsList(){

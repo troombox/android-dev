@@ -60,5 +60,24 @@ public class RecycleFragment extends Fragment {
         rvContacts.setAdapter(adapter);
         // Set layout manager to position the items
         rvContacts.setLayoutManager(new LinearLayoutManager(this.getContext()));
+
+        _model.getSelectedPositionLiveData().observe(getActivity(), new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+               adapter.updatePosition(integer);
+            }
+        });
+
+        _model.getContactsArrayLiveData().observe(getActivity(), new Observer<ArrayList<Contact>>() {
+            @Override
+            public void onChanged(ArrayList<Contact> contacts) {
+                adapter.updateContactsList(contacts);
+            }
+        });
     }
+
+    interface RecycleListener{
+        void OnClickEvent();
+    }
+
 }

@@ -24,6 +24,14 @@
             android:textStyle="bold"
             android:text="@string/placeholder" />
 
+        <TextView
+            android:id="@+id/list_contact_tv_contactPhoneNum"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textStyle="italic"
+            android:text="@string/placeholder" />
+
     </LinearLayout>
 
 </LinearLayout>

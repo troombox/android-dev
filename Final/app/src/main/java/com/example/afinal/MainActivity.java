@@ -22,9 +22,6 @@ public class MainActivity extends AppCompatActivity implements ContactViewModel.
 
         _model = new ViewModelProvider(this).get(ContactViewModel.class);
         _model.initViewModelFromRepository(new ContactRepository(this));
-//        ContactRepository r = new ContactRepository(this);
-//        TextView t = (TextView)findViewById(R.id.tv_test);
-//        t.setText(((Contact)r.getContactsList().get(0)).getName());
     }
 
     @Override

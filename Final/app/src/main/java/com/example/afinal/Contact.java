@@ -1,6 +1,6 @@
 package com.example.afinal;
 
-public class Contact {
+public class Contact implements Comparable<Contact> {
     private String name;
     private String phoneNumber;
     private String email;
@@ -36,5 +36,24 @@ public class Contact {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @Override
+    public boolean equals(Object o){
+        if(!(o instanceof Contact)){
+            return false;
+        }
+        if(o == this){
+            return true;
+        }
+        if((((Contact) o).name).equals(this.name)){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public int compareTo(Contact contact) {
+        return this.name.compareTo(contact.name);
     }
 }

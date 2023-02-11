@@ -49,6 +49,30 @@ public class ContactViewModel extends AndroidViewModel {
         _contactsArrayLiveData.setValue(_contactsArray);
     }
 
+    public void setSelected(Contact c){
+        int pos = _contactsArray.indexOf(c);
+        if(pos < 0)
+            return;
+        if(pos == _selectedPosition){
+            _selectedPosition = -1;
+        } else{
+            _selectedPosition = pos;
+        }
+        _selectedPositionLiveData.setValue(_selectedPosition);
+    }
+
+    public void removeContact(Contact c) {
+        int pos = _contactsArray.indexOf(c);
+        if(pos < 0)
+            return;
+        if(pos == _selectedPosition) {
+            _selectedPosition = -1;
+            _selectedPositionLiveData.setValue(_selectedPosition);
+        }
+        _contactsArray.remove(pos);
+        _contactsArrayLiveData.setValue(_contactsArray);
+    }
+
     public interface ShareModel{
         ContactViewModel shareModel();
     }
