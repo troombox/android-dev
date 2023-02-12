@@ -68,8 +68,14 @@ public class DataFragment extends Fragment {
                     public void onClick(DialogInterface dialog, int id) {
                         if (ContextCompat.checkSelfPermission(view.getContext(), Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED) {
                             SmsSender s = new SmsSender();
+                            // TODO: Firstm send the preference sms. Then decide which fact to send, by the received sms.
+                            // if (...) {
                             s.sendSms(null,_fd.getRandomFact(Fact.FACT_TYPE_CAT).getFactText());
 //                          s.sendSms("0545477901", _fd.getRandomFact(Fact.FACT_TYPE_CAT).getFactText());
+                            // }
+                            // else {
+                            s.sendSms(null,_fd.getRandomFact(Fact.FACT_TYPE_DOG).getFactText());
+                            // }
                             Toast.makeText(view.getContext(),"SMS sent", Toast.LENGTH_LONG).show();
                         } else {
                             ActivityCompat.requestPermissions((Activity) view.getContext(), new String[]{Manifest.permission.SEND_SMS},REQUEST_PERMISSIONS_REQUEST_SEND_SMS);

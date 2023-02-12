@@ -1,83 +1,103 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <facts>
     <fact>
+        <type>dog</type>
         <id>1</id>
-        <text></text>
+        <text>Dogs have about 100 million olfactory receptors in their noses, making them "pawesome" detectives!</text>
     </fact>
     <fact>
+        <type>dog</type>
         <id>2</id>
-        <text></text>
+        <text>The Basenji is the only breed of dog that doesn't bark. Instead, they make a sound similar to a yodel. Howl-larious!</text>
     </fact>
     <fact>
+        <type>dog</type>
         <id>3</id>
-        <text></text>
+        <text>The world's smallest dog breed is the Chihuahua, but don't let their size fool you - they have a big personality and a big bark!</text>
     </fact>
     <fact>
+        <type>dog</type>
         <id>4</id>
-        <text></text>
+        <text>Dogs sweat through their paws, which makes them the ultimate paw-some athletes!</text>
     </fact>
     <fact>
+        <type>dog</type>
         <id>5</id>
-        <text></text>
+        <text>The breed that can run the fastest is the Greyhound, with speeds up to 45 mph. They're like furry little racecars!</text>
     </fact>
     <fact>
+        <type>dog</type>
         <id>6</id>
-        <text></text>
+        <text>The Newfoundland breed was originally bred to help fishermen retrieve fish from the water. They're the ultimate catch!</text>
     </fact>
     <fact>
+        <type>dog</type>
         <id>7</id>
-        <text></text>
+        <text>Dogs have three eyelids - the third one is called the nictitating membrane. It helps protect their eyes and is fur-tastic for keeping out dirt and debris.</text>
     </fact>
     <fact>
+        <type>dog</type>
         <id>8</id>
-        <text></text>
+        <text>Some dogs can understand up to 250 words and gestures, making them the "paws-itively" smartest companions!</text>
     </fact>
     <fact>
+        <type>dog</type>
         <id>9</id>
-        <text></text>
+        <text>Dalmatians are born without spots - they develop them as they grow older. So cute, they're "spotted-tacular"!</text>
     </fact>
     <fact>
+        <type>dog</type>
         <id>10</id>
-        <text></text>
+        <text>Dogs have a unique ability to sense emotions in humans, making them the ultimate "em-bark-able" therapists!</text>
     </fact>
     <fact>
+        <type>dog</type>
         <id>11</id>
-        <text></text>
+        <text>Dogs have a special gland in their mouth that produces a calming hormone, making them the world's most relaxing chew toys.</text>
     </fact>
     <fact>
+        <type>dog</type>
         <id>12</id>
-        <text></text>
+        <text>Dogs are the ultimate medical detectives, they can detect changes in a person's body odor that indicate disease.</text>
     </fact>
     <fact>
+        <type>dog</type>
         <id>13</id>
-        <text></text>
+        <text>Dogs have a special bond with their owners, they can recognize their voice and scent from miles away.</text>
     </fact>
     <fact>
+        <type>dog</type>
         <id>14</id>
-        <text></text>
+        <text>Dogs can sense changes in barometric pressure, which is why they often act like little weather forecasters before a storm.</text>
     </fact>
     <fact>
+        <type>dog</type>
         <id>15</id>
-        <text></text>
+        <text>Dogs can hear ultrasonic sounds that humans can't, making them the ultimate party animals on the dance floor.</text>
     </fact>
     <fact>
+        <type>dog</type>
         <id>16</id>
-        <text></text>
+        <text>Dogs are the super sniffers of the cancer world, they can detect cancerous cells faster than any human doctor.</text>
     </fact>
     <fact>
+        <type>dog</type>
         <id>17</id>
-        <text></text>
+        <text>Dogs have a special talent for sound recognition, they can tell the difference between a ball and a treat just by the sound it makes.</text>
     </fact>
     <fact>
+        <type>dog</type>
         <id>18</id>
-        <text></text>
+        <text>Dogs have a special muscle in their eyes that helps them avoid the dog equivalent of a bad hair day by squinting in the sun.</text>
     </fact>
     <fact>
+        <type>dog</type>
         <id>19</id>
-        <text></text>
+        <text>Dogs can understand more than 1,000 words, making them the smartest pets on the block. They're like the canine version of Google.</text>
     </fact>
     <fact>
+        <type>dog</type>
         <id>20</id>
-        <text></text>
+        <text>Dogs are like the seismologists of the pet world, they can predict earthquakes by detecting the low-frequency sounds that only they can hear.</text>
     </fact>
 </facts>

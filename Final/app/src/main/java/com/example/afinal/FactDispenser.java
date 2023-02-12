@@ -19,7 +19,7 @@ public class FactDispenser {
     private FactDispenser(Context c){
         _context = c;
         _catFacts = FactsXMLParser.parseFacts(_context, FactsXMLParser.FACTS_FILE_CAT);
-//        _dogFacts = FactsXMLParser.parseFacts(_context, FactsXMLParser.FACTS_FILE_DOG);
+        _dogFacts = FactsXMLParser.parseFacts(_context, FactsXMLParser.FACTS_FILE_DOG);
     }
 
     public static FactDispenser getInstance(Context c){
