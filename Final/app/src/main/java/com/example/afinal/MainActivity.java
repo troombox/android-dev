@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements ContactViewModel.
 
     private void recycleViewInitOnStart(){
         _model = new ViewModelProvider(this).get(ContactViewModel.class);
-        _model.initViewModelFromRepository(new ContactRepository(this));
+        _model.initViewModelFromRepository(ContactRepository.getInstance(this));
         getSupportFragmentManager().beginTransaction()
                 .setReorderingAllowed(true)
                 .add(R.id.fragmentContainerView, RecycleFragment.class, null,"RFC")

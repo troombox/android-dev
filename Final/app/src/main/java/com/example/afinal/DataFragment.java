@@ -50,7 +50,7 @@ public class DataFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        _fd = new FactDispenser(view.getContext());
+        _fd = FactDispenser.getInstance(view.getContext());
 
         view.findViewById(R.id.f_data_btn_sendSms).setOnClickListener(new View.OnClickListener() {
             @Override

@@ -14,12 +14,22 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 public class ContactRepository {
-    ArrayList<Contact> c;
-    Activity a;
 
-    public ContactRepository(Activity a){
+    private static ContactRepository _cr;
+
+    private ArrayList<Contact> c;
+    private Activity a;
+
+    private ContactRepository(Activity a){
         this.a = a;
         c = new ArrayList<>();
+    }
+
+    public static ContactRepository getInstance(Activity a){
+        if(_cr == null){
+            _cr = new ContactRepository(a);
+        }
+        return _cr;
     }
 
     @SuppressLint("Range")

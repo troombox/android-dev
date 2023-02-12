@@ -16,10 +16,10 @@ import java.util.Arrays;
 public class ContactViewModel extends AndroidViewModel {
 
     //Live data
-    ArrayList<Contact> _contactsArray;
-    MutableLiveData<ArrayList<Contact>> _contactsArrayLiveData;
-    Integer _selectedPosition;
-    MutableLiveData<Integer> _selectedPositionLiveData;
+    private ArrayList<Contact> _contactsArray;
+    private MutableLiveData<ArrayList<Contact>> _contactsArrayLiveData;
+    private Integer _selectedPosition;
+    private MutableLiveData<Integer> _selectedPositionLiveData;
 
     //
     private Application _app;

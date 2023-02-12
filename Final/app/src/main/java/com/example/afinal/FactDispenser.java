@@ -7,14 +7,25 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class FactDispenser {
-    Context _context;
-    ArrayList<Fact> _catFacts;
-    ArrayList<Fact> _dogFacts;
-    Random random = new Random();
 
-    public FactDispenser(Context c){
+    private static FactDispenser _fd;
+
+    private Context _context;
+    private ArrayList<Fact> _catFacts;
+    private ArrayList<Fact> _dogFacts;
+
+    private Random random = new Random();
+
+    private FactDispenser(Context c){
         _context = c;
         _catFacts = FactsXMLParser.parseFacts(_context, FactsXMLParser.FACTS_FILE_CAT);
+    }
+
+    public static FactDispenser getInstance(Context c){
+        if(_fd == null){
+            _fd = new FactDispenser(c);
+        }
+        return _fd;
     }
 
     public Fact getRandomFact(int factType){
