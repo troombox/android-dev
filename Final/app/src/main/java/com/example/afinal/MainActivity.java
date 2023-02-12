@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements ContactViewModel.
             ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.READ_CONTACTS},REQUEST_PERMISSIONS_REQUEST_READ_CONTACTS);
         }
 //        /*  */
-//        ContactHistoryManager cm =  new ContactHistoryManager(this);
+//        ContactHistoryViewModel cm =  new ContactHistoryViewModel(this);
 //        for(int i = 0; i < 5; i++){
 //            ContactHistory ch = new ContactHistory();
 //            ch.setContact(new Contact("S" + Integer.toString(i),"0000000"));
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements ContactViewModel.
 //            cm.saveContactHistory(ch);
 //        }
 //        cm.saveContactHistories();
-//        cm = new ContactHistoryManager(this);
+//        cm = new ContactHistoryViewModel(this);
 //        cm.loadContactHistories();
 //
 //        cm.getContactHistoryByContactName("S1");
