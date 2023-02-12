@@ -1,6 +1,8 @@
 package com.example.afinal;
 
-public class Contact implements Comparable<Contact> {
+import java.io.Serializable;
+
+public class Contact implements Comparable<Contact>, Serializable {
     private String name;
     private String phoneNumber;
     private String email;
@@ -10,6 +12,7 @@ public class Contact implements Comparable<Contact> {
         this.phoneNumber = phoneNumber;
         this.email = email;
     }
+
     public Contact(String name, String phoneNumber) {
         this(name,phoneNumber,"");
     }
@@ -56,4 +59,5 @@ public class Contact implements Comparable<Contact> {
     public int compareTo(Contact contact) {
         return this.name.compareTo(contact.name);
     }
+
 }

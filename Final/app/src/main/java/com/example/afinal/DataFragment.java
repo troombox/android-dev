@@ -5,11 +5,13 @@ import static com.example.afinal.MainActivity.REQUEST_PERMISSIONS_REQUEST_SEND_S
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -55,14 +57,27 @@ public class DataFragment extends Fragment {
         view.findViewById(R.id.f_data_btn_sendSms).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (ContextCompat.checkSelfPermission(view.getContext(), Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED) {
-                    SmsSender s = new SmsSender();
-//                    s.sendSms(null,null);
-                    s.sendSms("0545477901", _fd.getRandomFact(Fact.FACT_TYPE_CAT).getFactText());
-                    Toast.makeText(view.getContext(),"SMS sent", Toast.LENGTH_LONG).show();
-                } else {
-                    ActivityCompat.requestPermissions((Activity) view.getContext(), new String[]{Manifest.permission.SEND_SMS},REQUEST_PERMISSIONS_REQUEST_SEND_SMS);
-                }
+                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext()); // Replace "context" with the actual context of your app
+                builder.setMessage("Are you sure you want to send SMS message?");
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        if (ContextCompat.checkSelfPermission(view.getContext(), Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED) {
+                            SmsSender s = new SmsSender();
+                            s.sendSms(null,_fd.getRandomFact(Fact.FACT_TYPE_CAT).getFactText());
+//                          s.sendSms("0545477901", _fd.getRandomFact(Fact.FACT_TYPE_CAT).getFactText());
+                            Toast.makeText(view.getContext(),"SMS sent", Toast.LENGTH_LONG).show();
+                        } else {
+                            ActivityCompat.requestPermissions((Activity) view.getContext(), new String[]{Manifest.permission.SEND_SMS},REQUEST_PERMISSIONS_REQUEST_SEND_SMS);
+                        }
+                    }
+                });
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
             }
         });
     }

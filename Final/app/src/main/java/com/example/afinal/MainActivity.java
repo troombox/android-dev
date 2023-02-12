@@ -24,6 +24,8 @@ import androidx.fragment.app.FragmentContainerView;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceFragmentCompat;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity implements ContactViewModel.ShareModel, RecycleFragment.RecycleListener {
 
     static final int REQUEST_PERMISSIONS_REQUEST_READ_CONTACTS = 0;
@@ -41,7 +43,26 @@ public class MainActivity extends AppCompatActivity implements ContactViewModel.
         } else {
             ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.READ_CONTACTS},REQUEST_PERMISSIONS_REQUEST_READ_CONTACTS);
         }
-
+//        /*  */
+//        ContactHistoryManager cm =  new ContactHistoryManager(this);
+//        for(int i = 0; i < 5; i++){
+//            ContactHistory ch = new ContactHistory();
+//            ch.setContact(new Contact("S" + Integer.toString(i),"0000000"));
+//            ArrayList<Integer> array = new ArrayList<>();
+//            array.add(1);
+//            ch.setFactIDsArray(array);
+//            ArrayList<String> arrayS = new ArrayList<>();
+//            arrayS.add("string");
+//            ch.setMessagesArray(arrayS);
+//            cm.saveContactHistory(ch);
+//        }
+//        cm.saveContactHistories();
+//        cm = new ContactHistoryManager(this);
+//        cm.loadContactHistories();
+//
+//        cm.getContactHistoryByContactName("S1");
+//
+//        /*  */
         DataFragment countryDataFragment = (DataFragment) getSupportFragmentManager().findFragmentByTag("CDF");
         FragmentContainerView fragmentContainerViewDetails = (FragmentContainerView) findViewById(R.id.fragmentContainerView);
 
@@ -63,9 +84,9 @@ public class MainActivity extends AppCompatActivity implements ContactViewModel.
         _model = new ViewModelProvider(this).get(ContactViewModel.class);
         _model.initViewModelFromRepository(ContactRepository.getInstance(this));
         getSupportFragmentManager().beginTransaction()
-                .setReorderingAllowed(true)
+//                .setReorderingAllowed(true)
                 .add(R.id.fragmentContainerView, RecycleFragment.class, null,"RFC")
-                .addToBackStack("BBB")
+//                .addToBackStack("BBB")
                 .commit();
         getSupportFragmentManager().executePendingTransactions();
     }
