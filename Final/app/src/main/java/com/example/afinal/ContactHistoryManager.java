@@ -53,7 +53,6 @@ public class ContactHistoryManager {
         }
     }
 
-    @SuppressWarnings("unchecked")
     private ArrayList<ContactHistory> loadArrayListFromFile(String filename) {
         ArrayList<ContactHistory> arrayList = null;
         try {

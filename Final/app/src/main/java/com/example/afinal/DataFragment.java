@@ -19,11 +19,13 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class DataFragment extends Fragment {
 
     FactDispenser _fd;
+    ContactViewModel _model;
 
     public DataFragment() {
         // Required empty public constructor
@@ -53,6 +55,9 @@ public class DataFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         _fd = FactDispenser.getInstance(view.getContext());
+        _model = ((ContactViewModel.ShareModel)(view.getContext())).shareModel();
+
+        ((TextView)view.findViewById(R.id.f_data_tv_contactName)).setText(_model.getContactByPosition(_model.getSelectedPositionLiveData().getValue()).getName());
 
         view.findViewById(R.id.f_data_btn_sendSms).setOnClickListener(new View.OnClickListener() {
             @Override

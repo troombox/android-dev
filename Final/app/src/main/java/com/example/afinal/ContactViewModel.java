@@ -91,6 +91,10 @@ public class ContactViewModel extends AndroidViewModel {
         saveToSharedPref("contactDataSaved", contactsArrayToContactsString(_contactsArray));
     }
 
+    public Contact getContactByPosition(int position){
+        return _contactsArray.get(position);
+    }
+
     public interface ShareModel{
         ContactViewModel shareModel();
     }
