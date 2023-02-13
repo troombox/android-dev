@@ -15,6 +15,12 @@ public class ContactHistory implements Serializable {
         this.messages = messages;
     }
 
+    public ContactHistory(Contact contact) {
+        this._c = contact;
+        this.factIDs = new ArrayList<>();
+        this.messages = new ArrayList<>();
+    }
+
     public ContactHistory() {
         this._c = null;
         this.factIDs = new ArrayList<>();
@@ -43,6 +49,15 @@ public class ContactHistory implements Serializable {
 
     public void setMessagesArray(ArrayList<String> messages) {
         this.messages = messages;
+    }
+
+    public String printFormattedMessages(){
+        StringBuilder st = new StringBuilder();
+        for(String s : messages){
+            st.append(s);
+            st.append("\n\n");
+        }
+        return st.toString();
     }
 
 }

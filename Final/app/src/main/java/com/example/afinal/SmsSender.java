@@ -14,9 +14,9 @@ public class SmsSender {
         if(smsText != null){
             message = smsText;
         }
+
         SmsManager smsManager = SmsManager.getDefault();
         smsManager.sendTextMessage(phoneNumber, null, message,null,null);
-
     }
 
 }

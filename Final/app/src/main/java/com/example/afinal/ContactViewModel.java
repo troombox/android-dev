@@ -1,8 +1,6 @@
 package com.example.afinal;
 
-import android.app.Activity;
 import android.app.Application;
-import android.content.Context;
 import android.content.SharedPreferences;
 
 import androidx.annotation.NonNull;
@@ -100,8 +98,8 @@ public class ContactViewModel extends AndroidViewModel {
         return _contactsArray.get(position);
     }
 
-    public interface ShareModel{
-        ContactViewModel shareModel();
+    public interface ShareContactModel {
+        ContactViewModel shareContactModel();
     }
     private String contactsArrayToContactsString(ArrayList<Contact> contactsArray){
         StringBuilder r = new StringBuilder();

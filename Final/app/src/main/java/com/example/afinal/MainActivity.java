@@ -2,19 +2,15 @@ package com.example.afinal;
 
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.pm.PackageManager;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 
-import androidx.activity.result.contract.ActivityResultContract;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,19 +20,21 @@ import androidx.fragment.app.FragmentContainerView;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceFragmentCompat;
 
-import java.util.ArrayList;
-
-public class MainActivity extends AppCompatActivity implements ContactViewModel.ShareModel, RecycleFragment.RecycleListener {
+public class MainActivity extends AppCompatActivity implements ContactViewModel.ShareContactModel, ContactHistoryViewModel.ShareHistoryModel, RecycleFragment.RecycleListener {
 
     static final int REQUEST_PERMISSIONS_REQUEST_READ_CONTACTS = 0;
     static final int REQUEST_PERMISSIONS_REQUEST_SEND_SMS = 1;
 
-    ContactViewModel _model;
+    ContactViewModel _contactViewModel;
+    ContactHistoryViewModel _contactHistoryViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        _contactHistoryViewModel = new ViewModelProvider(this).get(ContactHistoryViewModel.class);
+        _contactHistoryViewModel.initViewModelFromFile();
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
             recycleViewInitOnStart();
@@ -81,8 +79,8 @@ public class MainActivity extends AppCompatActivity implements ContactViewModel.
     }
 
     private void recycleViewInitOnStart(){
-        _model = new ViewModelProvider(this).get(ContactViewModel.class);
-        _model.initViewModelFromRepository(ContactRepository.getInstance(this));
+        _contactViewModel = new ViewModelProvider(this).get(ContactViewModel.class);
+        _contactViewModel.initViewModelFromRepository(ContactRepository.getInstance(this));
         getSupportFragmentManager().beginTransaction()
 //                .setReorderingAllowed(true)
                 .add(R.id.fragmentContainerView, RecycleFragment.class, null,"RFC")
@@ -93,8 +91,13 @@ public class MainActivity extends AppCompatActivity implements ContactViewModel.
 
 
     @Override
-    public ContactViewModel shareModel() {
-        return _model;
+    public ContactViewModel shareContactModel() {
+        return _contactViewModel;
+    }
+
+    @Override
+    public ContactHistoryViewModel shareHistoryModel() {
+        return _contactHistoryViewModel;
     }
 
     //Menu + options:
@@ -128,6 +131,7 @@ public class MainActivity extends AppCompatActivity implements ContactViewModel.
 //        }
         contactDataFragment = (DataFragment) getSupportFragmentManager().findFragmentByTag("CDF");
     }
+
 
     public static class MyPreferences extends PreferenceFragmentCompat{
 

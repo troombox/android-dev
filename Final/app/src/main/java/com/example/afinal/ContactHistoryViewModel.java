@@ -19,8 +19,6 @@ public class ContactHistoryViewModel extends AndroidViewModel {
     //Live data
     private ArrayList<ContactHistory> _contactHistories;
     private MutableLiveData<ArrayList<ContactHistory>> _contactHistoriesLiveData;
-    private Integer _selectedPosition;
-    private MutableLiveData<Integer> _selectedPositionLiveData;
 
     //
     private final String HISTORY_FILE = "history_file";
@@ -35,20 +33,13 @@ public class ContactHistoryViewModel extends AndroidViewModel {
         _pref = PreferenceManager.getDefaultSharedPreferences(application.getBaseContext());
         //prepare data
         _contactHistoriesLiveData = new MutableLiveData<>();
-        _selectedPositionLiveData = new MutableLiveData<>();
         _contactHistories = new ArrayList<>();
-        _selectedPosition = Integer.valueOf(-1);
         //set live data
         _contactHistoriesLiveData.setValue(_contactHistories);
-        _selectedPositionLiveData.setValue(_selectedPosition);
     }
 
-    public MutableLiveData<ArrayList<ContactHistory>> getContactsArrayLiveData() {
+    public MutableLiveData<ArrayList<ContactHistory>> getContactHistoriesArrayLiveData() {
         return _contactHistoriesLiveData;
-    }
-
-    public MutableLiveData<Integer> getSelectedPositionLiveData() {
-        return _selectedPositionLiveData;
     }
 
     public void saveContactHistories(){
@@ -74,12 +65,21 @@ public class ContactHistoryViewModel extends AndroidViewModel {
                 return ch;
             }
         }
-
-        return new ContactHistory();
+        return null;
     }
 
     public void saveContactHistory(ContactHistory contactHistory){
+        int index = -1;
+        for(ContactHistory ch : _contactHistories){
+            if(ch.getContact().equals(contactHistory.getContact())){
+                index = _contactHistories.indexOf(ch);
+            }
+        }
+        if(index >= 0){
+            _contactHistories.remove(index);
+        }
         _contactHistories.add(contactHistory);
+        _contactHistoriesLiveData.setValue(_contactHistories);
     }
 
     private void saveArrayListToFile(ArrayList<ContactHistory> arrayList, String filename) {
@@ -111,6 +111,8 @@ public class ContactHistoryViewModel extends AndroidViewModel {
     }
 
 
-
+    interface ShareHistoryModel{
+        ContactHistoryViewModel shareHistoryModel();
+    }
 
 }
