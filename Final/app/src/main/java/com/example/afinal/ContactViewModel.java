@@ -22,16 +22,13 @@ public class ContactViewModel extends AndroidViewModel {
     private MutableLiveData<Integer> _selectedPositionLiveData;
 
     //
-    private Application _app;
     private SharedPreferences _pref;
 
 
     public ContactViewModel(@NonNull Application application) {
         //init
         super(application);
-        _app = application;
         _pref = PreferenceManager.getDefaultSharedPreferences(application.getBaseContext());
-
         //prepare data
         _contactsArrayLiveData = new MutableLiveData<>();
         _selectedPositionLiveData = new MutableLiveData<>();
@@ -52,29 +49,36 @@ public class ContactViewModel extends AndroidViewModel {
 
     public void initViewModelFromRepository(ContactRepository cr){
         boolean flagLoadTestData = _pref.getBoolean("preference_test_sw_loadTestData", false);
+
         if(flagLoadTestData){
             _contactsArray = cr.getTestContactData();
         } else {
             _contactsArray = cr.getContactsList();
         }
+
         boolean flagRememberRemoved = _pref.getBoolean("preference_cb_rememberContactsRemoved", false);
+
         if(flagRememberRemoved){
             String contactDataSaved = _pref.getString("contactDataSaved","");
             _contactsArray = editArrayByGivenString(_contactsArray, contactDataSaved);
         }
+
         _contactsArrayLiveData.setValue(_contactsArray);
         saveToSharedPref("contactDataSaved", contactsArrayToContactsString(_contactsArray));
     }
 
     public void setSelected(Contact c){
         int pos = _contactsArray.indexOf(c);
+
         if(pos < 0)
             return;
+
         if(pos == _selectedPosition){
             _selectedPosition = -1;
         } else{
             _selectedPosition = pos;
         }
+
         _selectedPositionLiveData.setValue(_selectedPosition);
     }
 
@@ -86,6 +90,7 @@ public class ContactViewModel extends AndroidViewModel {
             _selectedPosition = -1;
             _selectedPositionLiveData.setValue(_selectedPosition);
         }
+
         _contactsArray.remove(pos);
         _contactsArrayLiveData.setValue(_contactsArray);
         saveToSharedPref("contactDataSaved", contactsArrayToContactsString(_contactsArray));
@@ -100,10 +105,12 @@ public class ContactViewModel extends AndroidViewModel {
     }
     private String contactsArrayToContactsString(ArrayList<Contact> contactsArray){
         StringBuilder r = new StringBuilder();
+
         for(Contact c: contactsArray){
             r.append(c.getName());
             r.append(",");
         }
+
         return r.toString();
     }
 
@@ -111,11 +118,13 @@ public class ContactViewModel extends AndroidViewModel {
         ArrayList<Contact> result = new ArrayList<>();
         String sp[] = contactsString.split(",");
         ArrayList<String> list = new ArrayList<String>(Arrays.asList(sp));
+
         for (Contact c : contactsArray){
             if(list.contains(c.getName())){
                 result.add(c);
             }
         }
+
         return result;
     }
 
