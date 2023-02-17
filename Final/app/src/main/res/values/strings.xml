@@ -4,6 +4,7 @@
     <string name="preference_option_remember_removed">Remember Removed Contacts</string>
     <string name="preference_option_remember_history">Remember Contacts History</string>
     <string name="preference_option_remember_preference">Remember Contacts Preferences</string>
+    <string name="preference_option_auto_send">Send messages automatically</string>
     <string name="preference_option_test_data">Load test data on start</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="data_fragment_btn_send_sms">Send SMS</string>

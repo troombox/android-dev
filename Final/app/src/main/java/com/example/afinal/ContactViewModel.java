@@ -35,6 +35,7 @@ public class ContactViewModel extends AndroidViewModel {
         //set live data
         _contactsArrayLiveData.setValue(_contactsArray);
         _selectedPositionLiveData.setValue(_selectedPosition);
+
     }
 
     public MutableLiveData<ArrayList<Contact>> getContactsArrayLiveData() {
@@ -63,6 +64,14 @@ public class ContactViewModel extends AndroidViewModel {
 
         _contactsArrayLiveData.setValue(_contactsArray);
         saveToSharedPref("contactDataSaved", contactsArrayToContactsString(_contactsArray));
+
+        //preference:
+        boolean flagRememberPreferences = _pref.getBoolean("preference_cb_rememberContactsPreference",false);
+        if(!flagRememberPreferences){
+            for(Contact c : _contactsArray){
+                saveToSharedPref(c.getName()+"_preference","");
+            }
+        }
     }
 
     public void setSelected(Contact c){
@@ -71,12 +80,12 @@ public class ContactViewModel extends AndroidViewModel {
         if(pos < 0)
             return;
 
-        if(pos == _selectedPosition){
-            _selectedPosition = -1;
-        } else{
-            _selectedPosition = pos;
-        }
-
+//        if(pos == _selectedPosition){
+//            _selectedPosition = -1;
+//        } else{
+//            _selectedPosition = pos;
+//        }
+        _selectedPosition = pos;
         _selectedPositionLiveData.setValue(_selectedPosition);
     }
 
@@ -147,6 +156,9 @@ public class ContactViewModel extends AndroidViewModel {
     }
 
     public String getContactPreference(Contact c){
+//        boolean flagRememberPreferences = _pref.getBoolean("preference_cb_rememberContactsPreference",false);
+//        if(!flagRememberPreferences)
+//            return "";
         return _pref.getString(c.getName() + "_preference","");
     }
 
@@ -165,5 +177,9 @@ public class ContactViewModel extends AndroidViewModel {
         if(c == null)
             return;
         saveToSharedPref(c.getName()+"_preference",preference);
+    }
+
+    public boolean checkFlagAutoSend(){
+        return _pref.getBoolean("preference_cb_autoSend", false);
     }
 }

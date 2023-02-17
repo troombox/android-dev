@@ -15,6 +15,10 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+import androidx.work.Data;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +27,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 public class DataFragment extends Fragment {
     //data
@@ -34,6 +39,7 @@ public class DataFragment extends Fragment {
     private ContactHistory _currentContactHistory;
     private String _contactPreference;
 
+    private View _view;
     private TextView _ui_messages;
     private TextView _ui_contactName;
     private TextView _ui_contactPreference;
@@ -65,11 +71,11 @@ public class DataFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        _view = view;
         _fd = FactDispenser.getInstance(view.getContext());
         _model = ((ContactViewModel.ShareContactModel)(view.getContext())).shareContactModel();
         _currentContact = _model.getContactByPosition(_model.getSelectedPositionLiveData().getValue());
         _contactPreference = _model.getContactPreference(_currentContact);
-
         _historyModel = ((ContactHistoryViewModel.ShareHistoryModel)(view.getContext())).shareHistoryModel();
         _currentContactHistory = _historyModel.getContactHistoryByContactName(_currentContact.getName());
         if(_currentContactHistory == null){
@@ -82,6 +88,7 @@ public class DataFragment extends Fragment {
 
         _ui_contactName.setText(_currentContact.getName());
         _ui_messages.setText(_currentContactHistory.printFormattedMessages());
+        _ui_contactPreference.setText(_contactPreference);
         _historyModel.getContactHistoriesArrayLiveData().observe(getActivity(), new Observer<ArrayList<ContactHistory>>() {
             @Override
             public void onChanged(ArrayList<ContactHistory> contacts) {
@@ -101,9 +108,9 @@ public class DataFragment extends Fragment {
                             SmsSender s = new SmsSender();
                             Fact f;
                             String factText;
-
+                            _contactPreference = _model.getContactPreference(_currentContact);
                             if(_contactPreference.equals("")){
-                                s.sendPreferencesRequestSms(null);
+                                s.sendPreferencesRequestSms(_currentContact.getPhoneNumber());
                                 Toast.makeText(view.getContext(),"SMS sent", Toast.LENGTH_LONG).show();
                                 return;
                             }else if(_contactPreference.equals("DOG")){
@@ -114,12 +121,21 @@ public class DataFragment extends Fragment {
                                 factText = f.getFactText();
                             }else
                                 return;
-                            s.sendSms(null,factText);
+                            s.sendSms(_currentContact.getPhoneNumber(),factText);
                             _currentContactHistory.getMessagesArray().add(factText);
                             _currentContactHistory.getFactIDsArray().add(f.getFactID());
                             Toast.makeText(view.getContext(),"SMS sent", Toast.LENGTH_LONG).show();
                             _historyModel.saveContactHistory(_currentContactHistory);
                             _historyModel.saveContactHistories();
+                            if(_model.checkFlagAutoSend()){
+                                if(_contactPreference.equals("DOG")){
+                                    f = _fd.getRandomFact(Fact.FACT_TYPE_DOG);
+                                } else{
+                                    f = _fd.getRandomFact(Fact.FACT_TYPE_CAT);
+                                }
+                                enqueue(_currentContact.getPhoneNumber(),f.getFactText());
+                            }
+
                         } else {
                             ActivityCompat.requestPermissions((Activity) view.getContext(), new String[]{Manifest.permission.SEND_SMS},REQUEST_PERMISSIONS_REQUEST_SEND_SMS);
                         }
@@ -134,5 +150,56 @@ public class DataFragment extends Fragment {
                 dialog.show();
             }
         });
+    }
+
+//    private void enqueue(){
+//        ArrayList<Contact> contacts = _model.getContactsArrayLiveData().getValue();
+//        ArrayList<String> phones = new ArrayList<>();
+//        ArrayList<String> facts = new ArrayList<>();
+//        String pref;
+//        for (Contact c1 : contacts){
+//            pref = _model.getContactPreference(c1);
+//            if(!pref.equals("")){
+//                phones.add(c1.getName());
+//                if(pref.equals("DOG")){
+//                    facts.add(_fd.getRandomFact(Fact.FACT_TYPE_DOG).getFactText());
+//                } else{
+//                    facts.add(_fd.getRandomFact(Fact.FACT_TYPE_CAT).getFactText());
+//                }
+//            }
+//        }
+//
+//        Data inputData = new Data.Builder()
+//                .putStringArray("phones", phones.toArray(new String[0]))
+//                .putStringArray("facts", facts.toArray(new String[0]))
+//                .build();
+//
+//        // Create the work request to run the worker once a week
+////        OneTimeWorkRequest workRequest = new OneTimeWorkRequest.Builder(MyWorker.class)
+////                .setInitialDelay(1, TimeUnit.MINUTES)
+////                .setInputData(inputData)
+////                .build();
+//        PeriodicWorkRequest workRequest = new PeriodicWorkRequest.Builder(MyWorker.class, 30, TimeUnit.SECONDS)
+//                .setInitialDelay(30, TimeUnit.SECONDS)
+//                .setInputData(inputData)
+//                .build();
+//
+//        // Enqueue the work request using WorkManager
+//        WorkManager.getInstance(_view.getContext()).enqueue(workRequest);
+//    }
+
+
+    private void enqueue(String phone, String fact){
+
+        Data inputData = new Data.Builder()
+                .putString("phone",phone).putString("fact",fact)
+                .build();
+//                 Create the work request to run the worker once a week
+        OneTimeWorkRequest workRequest = new OneTimeWorkRequest.Builder(MyWorker.class)
+                .setInitialDelay(20, TimeUnit.SECONDS)
+                .setInputData(inputData)
+                .build();
+        //        // Enqueue the work request using WorkManager
+        WorkManager.getInstance(_view.getContext()).enqueue(workRequest);
     }
 }

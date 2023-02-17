@@ -14,6 +14,10 @@
             android:defaultValue="false"
             android:key="preference_cb_rememberContactsPreference"
             android:title="@string/preference_option_remember_preference" />
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="preference_cb_autoSend"
+            android:title="@string/preference_option_auto_send" />
     </PreferenceCategory>
     <PreferenceCategory android:title="Test Settings">
 

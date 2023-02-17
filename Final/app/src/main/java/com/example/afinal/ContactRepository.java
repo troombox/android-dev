@@ -71,11 +71,11 @@ public class ContactRepository {
 
     public ArrayList<Contact> getTestContactData(){
         ArrayList<Contact> list = new ArrayList<>();
-        for(int i = 0; i < 2; i++){
+        for(int i = 0; i < 1; i++){
             Contact contact = new Contact("Semion" +" " + Integer.toString(i), "0545441589");
             list.add(contact);
         }
-        for(int i = 0; i < 2; i++){
+        for(int i = 0; i < 1; i++){
             Contact contact = new Contact("BatEl" +" " + Integer.toString(i), "0548054078");
             list.add(contact);
         }

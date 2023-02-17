@@ -72,6 +72,10 @@ public class MainActivity extends AppCompatActivity implements ContactViewModel.
             }
         }
 
+//        Intent intentSms = new Intent(this, SmsService.class);
+//        ContextCompat.startForegroundService(this, intentSms);
+
+
     }
 
     private void removeContactDueToIntent(Intent intent) {
@@ -84,11 +88,11 @@ public class MainActivity extends AppCompatActivity implements ContactViewModel.
             Contact c = _contactViewModel.findContactByPhone(contact);
             if(c != null)
                 _contactViewModel.removeContact(c);
+            if(_uView != null)
+                _uView.updateView();
             return;
         }
         _contactViewModel.saveContactPreference(contact,preference);
-        if(_uView != null)
-            _uView.updateView();
     }
 
     @Override
