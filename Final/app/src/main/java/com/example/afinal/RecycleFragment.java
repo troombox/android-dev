@@ -25,7 +25,6 @@ public class RecycleFragment extends Fragment {
     public RecycleFragment() {
         // Required empty public constructor
     }
-
     public static RecycleFragment newInstance() {
         RecycleFragment fragment = new RecycleFragment();
         Bundle args = new Bundle();

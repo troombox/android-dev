@@ -32,9 +32,11 @@ public class DataFragment extends Fragment {
 
     private ContactHistoryViewModel _historyModel;
     private ContactHistory _currentContactHistory;
+    private String _contactPreference;
 
     private TextView _ui_messages;
     private TextView _ui_contactName;
+    private TextView _ui_contactPreference;
 
     public DataFragment() {
         // Required empty public constructor
@@ -66,6 +68,7 @@ public class DataFragment extends Fragment {
         _fd = FactDispenser.getInstance(view.getContext());
         _model = ((ContactViewModel.ShareContactModel)(view.getContext())).shareContactModel();
         _currentContact = _model.getContactByPosition(_model.getSelectedPositionLiveData().getValue());
+        _contactPreference = _model.getContactPreference(_currentContact);
 
         _historyModel = ((ContactHistoryViewModel.ShareHistoryModel)(view.getContext())).shareHistoryModel();
         _currentContactHistory = _historyModel.getContactHistoryByContactName(_currentContact.getName());
@@ -74,6 +77,7 @@ public class DataFragment extends Fragment {
         }
 
         _ui_contactName = ((TextView)view.findViewById(R.id.f_data_tv_contactName));
+        _ui_contactPreference = ((TextView)view.findViewById(R.id.f_data_tv_contactPreference));
         _ui_messages = ((TextView)view.findViewById(R.id.f_data_linear_tv_messageData));
 
         _ui_contactName.setText(_currentContact.getName());
@@ -95,20 +99,27 @@ public class DataFragment extends Fragment {
                     public void onClick(DialogInterface dialog, int id) {
                         if (ContextCompat.checkSelfPermission(view.getContext(), Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED) {
                             SmsSender s = new SmsSender();
-//                             TODO: Firstm send the preference sms. Then decide which fact to send, by the received sms.
-//                             if (...) {
-                            Fact f = _fd.getRandomFact(Fact.FACT_TYPE_CAT);
-                            String factText = f.getFactText();
+                            Fact f;
+                            String factText;
+
+                            if(_contactPreference.equals("")){
+                                s.sendPreferencesRequestSms(null);
+                                Toast.makeText(view.getContext(),"SMS sent", Toast.LENGTH_LONG).show();
+                                return;
+                            }else if(_contactPreference.equals("DOG")){
+                                f = _fd.getRandomFact(Fact.FACT_TYPE_DOG);
+                                factText = f.getFactText();
+                            } else if(_contactPreference.equals("CAT")){
+                                f = _fd.getRandomFact(Fact.FACT_TYPE_CAT);
+                                factText = f.getFactText();
+                            }else
+                                return;
                             s.sendSms(null,factText);
                             _currentContactHistory.getMessagesArray().add(factText);
                             _currentContactHistory.getFactIDsArray().add(f.getFactID());
-////                          s.sendSms("0545477901", _fd.getRandomFact(Fact.FACT_TYPE_CAT).getFactText());
-//                            // }
-//                            // else {
-//                            s.sendSms(null,_fd.getRandomFact(Fact.FACT_TYPE_DOG).getFactText());
-//                            // }
                             Toast.makeText(view.getContext(),"SMS sent", Toast.LENGTH_LONG).show();
                             _historyModel.saveContactHistory(_currentContactHistory);
+                            _historyModel.saveContactHistories();
                         } else {
                             ActivityCompat.requestPermissions((Activity) view.getContext(), new String[]{Manifest.permission.SEND_SMS},REQUEST_PERMISSIONS_REQUEST_SEND_SMS);
                         }

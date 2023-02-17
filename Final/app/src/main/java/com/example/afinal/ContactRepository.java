@@ -52,7 +52,7 @@ public class ContactRepository {
                     while (pCur.moveToNext()) {
                         String phoneNo = pCur.getString(pCur.getColumnIndex(
                                 ContactsContract.CommonDataKinds.Phone.NUMBER));
-                        contactHashSet.add(new Contact(name,phoneNo));
+                        contactHashSet.add(new Contact(name,phoneNo.replaceAll("[\\s-]", "")));
                     }
                     pCur.close();
                 }
@@ -71,11 +71,11 @@ public class ContactRepository {
 
     public ArrayList<Contact> getTestContactData(){
         ArrayList<Contact> list = new ArrayList<>();
-        for(int i = 0; i < 8; i++){
-            Contact contact = new Contact("Semion" +" " + Integer.toString(i), "0545441000");
+        for(int i = 0; i < 2; i++){
+            Contact contact = new Contact("Semion" +" " + Integer.toString(i), "0545441589");
             list.add(contact);
         }
-        for(int i = 0; i < 8; i++){
+        for(int i = 0; i < 2; i++){
             Contact contact = new Contact("BatEl" +" " + Integer.toString(i), "0548054078");
             list.add(contact);
         }

@@ -98,6 +98,21 @@ public class ContactViewModel extends AndroidViewModel {
         return _contactsArray.get(position);
     }
 
+    public Contact findContactByPhone(String phoneNumber) {
+        String phoneNumPrefix = phoneNumber;
+        String phoneNumNoPrefix = phoneNumber;
+        if (phoneNumPrefix.startsWith("+972")) {
+            phoneNumNoPrefix = "0" + phoneNumPrefix.substring(4);
+        }
+        Contact c = null;
+        for(Contact c1 : _contactsArray){
+            if(c1.getPhoneNumber().equals(phoneNumPrefix) || c1.getPhoneNumber().equals(phoneNumNoPrefix)){
+                c = c1;
+            }
+        }
+        return  c;
+    }
+
     public interface ShareContactModel {
         ContactViewModel shareContactModel();
     }
@@ -122,7 +137,6 @@ public class ContactViewModel extends AndroidViewModel {
                 result.add(c);
             }
         }
-
         return result;
     }
 
@@ -130,5 +144,26 @@ public class ContactViewModel extends AndroidViewModel {
         SharedPreferences.Editor editor = _pref.edit();
         editor.putString(key, value);
         editor.apply();
+    }
+
+    public String getContactPreference(Contact c){
+        return _pref.getString(c.getName() + "_preference","");
+    }
+
+    public void saveContactPreference(String phoneNumber, String preference){
+        String phoneNumPrefix = phoneNumber;
+        String phoneNumNoPrefix = phoneNumber;
+        if (phoneNumPrefix.startsWith("+972")) {
+            phoneNumNoPrefix = "0" + phoneNumPrefix.substring(4);
+        }
+        Contact c = null;
+        for(Contact c1 : _contactsArray){
+            if(c1.getPhoneNumber().equals(phoneNumPrefix) || c1.getPhoneNumber().equals(phoneNumNoPrefix)){
+                c = c1;
+            }
+        }
+        if(c == null)
+            return;
+        saveToSharedPref(c.getName()+"_preference",preference);
     }
 }

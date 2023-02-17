@@ -2,6 +2,7 @@ package com.example.afinal;
 
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
@@ -24,13 +26,19 @@ public class MainActivity extends AppCompatActivity implements ContactViewModel.
 
     static final int REQUEST_PERMISSIONS_REQUEST_READ_CONTACTS = 0;
     static final int REQUEST_PERMISSIONS_REQUEST_SEND_SMS = 1;
+    static final int REQUEST_PERMISSIONS_REQUEST_READ_SMS = 2;
+    static final int REQUEST_PERMISSIONS_REQUEST_RECEIVE_SMS = 3;
 
     ContactViewModel _contactViewModel;
     ContactHistoryViewModel _contactHistoryViewModel;
 
+    private UpdatableView _uView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         setContentView(R.layout.activity_main);
 
         _contactHistoryViewModel = new ViewModelProvider(this).get(ContactHistoryViewModel.class);
@@ -41,29 +49,46 @@ public class MainActivity extends AppCompatActivity implements ContactViewModel.
         } else {
             ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.READ_CONTACTS},REQUEST_PERMISSIONS_REQUEST_READ_CONTACTS);
         }
-//        /*  */
-//        ContactHistoryViewModel cm =  new ContactHistoryViewModel(this);
-//        for(int i = 0; i < 5; i++){
-//            ContactHistory ch = new ContactHistory();
-//            ch.setContact(new Contact("S" + Integer.toString(i),"0000000"));
-//            ArrayList<Integer> array = new ArrayList<>();
-//            array.add(1);
-//            ch.setFactIDsArray(array);
-//            ArrayList<String> arrayS = new ArrayList<>();
-//            arrayS.add("string");
-//            ch.setMessagesArray(arrayS);
-//            cm.saveContactHistory(ch);
-//        }
-//        cm.saveContactHistories();
-//        cm = new ContactHistoryViewModel(this);
-//        cm.loadContactHistories();
-//
-//        cm.getContactHistoryByContactName("S1");
-//
-//        /*  */
+        //rewrite
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) == PackageManager.PERMISSION_GRANTED) {
+        }
+        else {
+            requestPermissions(new String[] { Manifest.permission.RECEIVE_SMS }, REQUEST_PERMISSIONS_REQUEST_RECEIVE_SMS);
+        }
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED) {
+        }
+        else {
+            requestPermissions(new String[] { Manifest.permission.READ_SMS }, REQUEST_PERMISSIONS_REQUEST_READ_SMS);
+        }
+        //
         DataFragment countryDataFragment = (DataFragment) getSupportFragmentManager().findFragmentByTag("CDF");
         FragmentContainerView fragmentContainerViewDetails = (FragmentContainerView) findViewById(R.id.fragmentContainerView);
 
+        Intent intent = getIntent();
+        if(intent != null){
+            if(intent.getAction().equals("com.example.afinal.ACTION_REMOVE_CONTACT")){
+                removeContactDueToIntent(intent);
+                finish();
+            }
+        }
+
+    }
+
+    private void removeContactDueToIntent(Intent intent) {
+        String contact = intent.getStringExtra("contact");
+        String preference = intent.getStringExtra("preference");
+        if(contact == null || preference == null)
+            return;
+        Toast.makeText(this, contact +" " + preference, Toast.LENGTH_SHORT).show();
+        if(preference.equals("DELETE")){
+            Contact c = _contactViewModel.findContactByPhone(contact);
+            if(c != null)
+                _contactViewModel.removeContact(c);
+            return;
+        }
+        _contactViewModel.saveContactPreference(contact,preference);
+        if(_uView != null)
+            _uView.updateView();
     }
 
     @Override
@@ -116,6 +141,18 @@ public class MainActivity extends AppCompatActivity implements ContactViewModel.
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        Intent intent = getIntent();
+        if(intent != null){
+            if(intent.getAction().equals("com.example.afinal.ACTION_REMOVE_CONTACT")){
+                removeContactDueToIntent(intent);
+                return;
+            }
+        }
+    }
+
     //RecycleListener implementation:
     @Override
     public void onClickEvent() {
@@ -130,6 +167,14 @@ public class MainActivity extends AppCompatActivity implements ContactViewModel.
             getSupportFragmentManager().executePendingTransactions();
 //        }
         contactDataFragment = (DataFragment) getSupportFragmentManager().findFragmentByTag("CDF");
+    }
+
+    public void setUpdatableViewInMain(UpdatableView uView){
+        this._uView = uView;
+    }
+
+    interface UpdatableView{
+        public void updateView();
     }
 
 

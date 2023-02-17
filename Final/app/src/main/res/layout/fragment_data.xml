@@ -28,13 +28,33 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/placeholder"
+            android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/f_data_btn_sendSms"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.26" />
 
+        <TextView
+            android:id="@+id/f_data_tv_contactPreferenceLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="-50dp"
+            android:layout_marginTop="5dp"
+            android:text="@string/data_fragment_tv_user_pref_label"
+            app:layout_constraintStart_toStartOf="@+id/f_data_tv_contactName"
+            app:layout_constraintTop_toBottomOf="@+id/f_data_tv_contactName" />
+
+        <TextView
+            android:id="@+id/f_data_tv_contactPreference"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/data_fragment_tv_user_pref_value"
+            app:layout_constraintBottom_toBottomOf="@+id/f_data_tv_contactPreferenceLabel"
+            app:layout_constraintStart_toEndOf="@+id/f_data_tv_contactPreferenceLabel" />
+
         <ScrollView
+            android:id="@+id/scrollView2"
             android:layout_width="match_parent"
             android:layout_height="260dp"
             app:layout_constraintBottom_toBottomOf="@+id/f_data_btn_sendSms"

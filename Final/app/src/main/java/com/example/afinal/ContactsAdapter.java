@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHolder> {
+public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHolder> implements MainActivity.UpdatableView {
 
     private ContactViewModel _model;
     private List<Contact> _contacts;
@@ -25,6 +25,7 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
         _model = cvm;
         _listener = listener;
         _contacts = cvm.getContactsArrayLiveData().getValue();
+        ((MainActivity)_listener).setUpdatableViewInMain(this);
     }
 
     @NonNull
@@ -64,6 +65,11 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
 
     public void updateContactsList(ArrayList<Contact> contacts) {
         _contacts = contacts;
+        this.notifyDataSetChanged();
+    }
+
+    @Override
+    public void updateView() {
         this.notifyDataSetChanged();
     }
 
