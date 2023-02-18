@@ -56,7 +56,7 @@ public class ContactViewModel extends AndroidViewModel {
 
         boolean flagRememberRemoved = _pref.getBoolean("preference_cb_rememberContactsRemoved", false);
 
-        if(flagRememberRemoved){
+        if(flagRememberRemoved){ // remember the current contacts list
             String contactDataSaved = _pref.getString("contactDataSaved","");
             _contactsArray = editArrayByGivenString(_contactsArray, contactDataSaved);
         }

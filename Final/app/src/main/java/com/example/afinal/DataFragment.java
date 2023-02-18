@@ -163,13 +163,11 @@ public class DataFragment extends Fragment {
                 .setInitialDelay(20, TimeUnit.SECONDS)
                 .setInputData(inputData)
                 .build();
-        //        // Enqueue the work request using WorkManager
-        WorkManager.getInstance(_view.getContext()).enqueue(workRequest);
-    }
 //        PeriodicWorkRequest workRequest = new PeriodicWorkRequest.Builder(MyWorker.class, 30, TimeUnit.SECONDS)
 //                .setInitialDelay(30, TimeUnit.SECONDS)
 //                .setInputData(inputData)
 //                .build();
-//
-
+        //        // Enqueue the work request using WorkManager
+        WorkManager.getInstance(_view.getContext()).enqueue(workRequest);
+    }
 }

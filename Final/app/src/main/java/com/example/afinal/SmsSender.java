@@ -5,7 +5,8 @@ import android.telephony.SmsManager;
 public class SmsSender {
 
     private final String PREFERENCE_MESSAGE = "Hi, do you want to get DOG FACTS or CAT FACTS?\n" +
-            "Respond to this message with the word DOG or CAT accordingly!";
+            "Respond to this message with the word DOG or CAT accordingly!\nRespond DELETE if you don't" +
+            "want to receive any messages.";
 
     public void sendSms(String phoneNum, String smsText){
         //setup for sms data

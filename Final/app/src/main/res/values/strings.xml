@@ -9,6 +9,6 @@
     <string name="preference_option_allow_delete">Allow Contacts "Delete" request</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="data_fragment_btn_send_sms">Send SMS</string>
-    <string name="data_fragment_tv_user_pref_label">User Preference:</string>
+    <string name="data_fragment_tv_user_pref_label">User Preference: </string>
     <string name="data_fragment_tv_user_pref_value">"?"</string>
 </resources>
