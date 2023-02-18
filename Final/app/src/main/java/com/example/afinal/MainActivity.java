@@ -4,6 +4,7 @@ package com.example.afinal;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -61,13 +62,13 @@ public class MainActivity extends AppCompatActivity implements ContactViewModel.
             requestPermissions(new String[] { Manifest.permission.READ_SMS }, REQUEST_PERMISSIONS_REQUEST_READ_SMS);
         }
         //
-        DataFragment countryDataFragment = (DataFragment) getSupportFragmentManager().findFragmentByTag("CDF");
-        FragmentContainerView fragmentContainerViewDetails = (FragmentContainerView) findViewById(R.id.fragmentContainerView);
+//        DataFragment countryDataFragment = (DataFragment) getSupportFragmentManager().findFragmentByTag("CDF");
+//        FragmentContainerView fragmentContainerViewDetails = (FragmentContainerView) findViewById(R.id.fragmentContainerView);
 
         Intent intent = getIntent();
         if(intent != null){
             if(intent.getAction().equals("com.example.afinal.ACTION_REMOVE_CONTACT")){
-                removeContactDueToIntent(intent);
+                removeContactUpdatePrefDueToIntent(intent);
                 finish();
             }
         }
@@ -78,13 +79,13 @@ public class MainActivity extends AppCompatActivity implements ContactViewModel.
 
     }
 
-    private void removeContactDueToIntent(Intent intent) {
+    private void removeContactUpdatePrefDueToIntent(Intent intent) {
         String contact = intent.getStringExtra("contact");
         String preference = intent.getStringExtra("preference");
         if(contact == null || preference == null)
             return;
         Toast.makeText(this, contact +" " + preference, Toast.LENGTH_SHORT).show();
-        if(preference.equals("DELETE")){
+        if(preference.equals("DELETE") && _contactViewModel.checkFlagDelete()){
             Contact c = _contactViewModel.findContactByPhone(contact);
             if(c != null)
                 _contactViewModel.removeContact(c);
@@ -110,11 +111,20 @@ public class MainActivity extends AppCompatActivity implements ContactViewModel.
     private void recycleViewInitOnStart(){
         _contactViewModel = new ViewModelProvider(this).get(ContactViewModel.class);
         _contactViewModel.initViewModelFromRepository(ContactRepository.getInstance(this));
-        getSupportFragmentManager().beginTransaction()
-//                .setReorderingAllowed(true)
-                .add(R.id.fragmentContainerView, RecycleFragment.class, null,"RFC")
-//                .addToBackStack("BBB")
-                .commit();
+        if ((getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT)){
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.fragmentContainerView, RecycleFragment.class, null,"RFC")
+                    .commit();
+
+        } else {//landscape
+            DataFragment dataFragment = (DataFragment) getSupportFragmentManager().findFragmentByTag("CDF");
+            if(dataFragment != null){
+                getSupportFragmentManager().beginTransaction().hide(dataFragment).commitNow();
+            }
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.fragmentContainerView, RecycleFragment.class, null,"RFC")
+                        .add(R.id.fragmentContainerViewDetails, DataFragment.class, null,"CDF").commit();
+        }
         getSupportFragmentManager().executePendingTransactions();
     }
 
@@ -151,7 +161,7 @@ public class MainActivity extends AppCompatActivity implements ContactViewModel.
         Intent intent = getIntent();
         if(intent != null){
             if(intent.getAction().equals("com.example.afinal.ACTION_REMOVE_CONTACT")){
-                removeContactDueToIntent(intent);
+                removeContactUpdatePrefDueToIntent(intent);
                 return;
             }
         }
@@ -161,16 +171,23 @@ public class MainActivity extends AppCompatActivity implements ContactViewModel.
     @Override
     public void onClickEvent() {
         DataFragment contactDataFragment;
-//        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT)
-//        {
+        contactDataFragment = (DataFragment) getSupportFragmentManager().findFragmentByTag("CDF");
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT)
+        {
             getSupportFragmentManager().beginTransaction()
                     .setReorderingAllowed(true)
                     .add(R.id.fragmentContainerView, DataFragment.class, null,"CDF")
                     .addToBackStack("BBB")
                     .commit();
             getSupportFragmentManager().executePendingTransactions();
-//        }
-        contactDataFragment = (DataFragment) getSupportFragmentManager().findFragmentByTag("CDF");
+        } else{
+            getSupportFragmentManager().beginTransaction()
+//                    .setReorderingAllowed(true)
+                    .add(R.id.fragmentContainerViewDetails, DataFragment.class, null,"CDF")
+                    .commit();
+            getSupportFragmentManager().executePendingTransactions();
+        }
+
     }
 
     public void setUpdatableViewInMain(UpdatableView uView){

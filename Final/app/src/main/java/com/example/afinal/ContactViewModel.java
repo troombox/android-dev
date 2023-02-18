@@ -35,7 +35,6 @@ public class ContactViewModel extends AndroidViewModel {
         //set live data
         _contactsArrayLiveData.setValue(_contactsArray);
         _selectedPositionLiveData.setValue(_selectedPosition);
-
     }
 
     public MutableLiveData<ArrayList<Contact>> getContactsArrayLiveData() {
@@ -181,5 +180,9 @@ public class ContactViewModel extends AndroidViewModel {
 
     public boolean checkFlagAutoSend(){
         return _pref.getBoolean("preference_cb_autoSend", false);
+    }
+
+    public boolean checkFlagDelete(){
+        return _pref.getBoolean("preference_cb_allowDelete", false);
     }
 }

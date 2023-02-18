@@ -152,42 +152,6 @@ public class DataFragment extends Fragment {
         });
     }
 
-//    private void enqueue(){
-//        ArrayList<Contact> contacts = _model.getContactsArrayLiveData().getValue();
-//        ArrayList<String> phones = new ArrayList<>();
-//        ArrayList<String> facts = new ArrayList<>();
-//        String pref;
-//        for (Contact c1 : contacts){
-//            pref = _model.getContactPreference(c1);
-//            if(!pref.equals("")){
-//                phones.add(c1.getName());
-//                if(pref.equals("DOG")){
-//                    facts.add(_fd.getRandomFact(Fact.FACT_TYPE_DOG).getFactText());
-//                } else{
-//                    facts.add(_fd.getRandomFact(Fact.FACT_TYPE_CAT).getFactText());
-//                }
-//            }
-//        }
-//
-//        Data inputData = new Data.Builder()
-//                .putStringArray("phones", phones.toArray(new String[0]))
-//                .putStringArray("facts", facts.toArray(new String[0]))
-//                .build();
-//
-//        // Create the work request to run the worker once a week
-////        OneTimeWorkRequest workRequest = new OneTimeWorkRequest.Builder(MyWorker.class)
-////                .setInitialDelay(1, TimeUnit.MINUTES)
-////                .setInputData(inputData)
-////                .build();
-//        PeriodicWorkRequest workRequest = new PeriodicWorkRequest.Builder(MyWorker.class, 30, TimeUnit.SECONDS)
-//                .setInitialDelay(30, TimeUnit.SECONDS)
-//                .setInputData(inputData)
-//                .build();
-//
-//        // Enqueue the work request using WorkManager
-//        WorkManager.getInstance(_view.getContext()).enqueue(workRequest);
-//    }
-
 
     private void enqueue(String phone, String fact){
 
@@ -202,4 +166,10 @@ public class DataFragment extends Fragment {
         //        // Enqueue the work request using WorkManager
         WorkManager.getInstance(_view.getContext()).enqueue(workRequest);
     }
+//        PeriodicWorkRequest workRequest = new PeriodicWorkRequest.Builder(MyWorker.class, 30, TimeUnit.SECONDS)
+//                .setInitialDelay(30, TimeUnit.SECONDS)
+//                .setInputData(inputData)
+//                .build();
+//
+
 }
