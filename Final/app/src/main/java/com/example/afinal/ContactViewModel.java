@@ -12,14 +12,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class ContactViewModel extends AndroidViewModel {
-
-    //Live data
     private ArrayList<Contact> _contactsArray;
     private MutableLiveData<ArrayList<Contact>> _contactsArrayLiveData;
     private Integer _selectedPosition;
     private MutableLiveData<Integer> _selectedPositionLiveData;
 
-    //
     private SharedPreferences _pref;
 
 
@@ -64,7 +61,7 @@ public class ContactViewModel extends AndroidViewModel {
         _contactsArrayLiveData.setValue(_contactsArray);
         saveToSharedPref("contactDataSaved", contactsArrayToContactsString(_contactsArray));
 
-        //preference:
+        //contact's preference (dog/cat):
         boolean flagRememberPreferences = _pref.getBoolean("preference_cb_rememberContactsPreference",false);
         if(!flagRememberPreferences){
             for(Contact c : _contactsArray){
@@ -75,15 +72,8 @@ public class ContactViewModel extends AndroidViewModel {
 
     public void setSelected(Contact c){
         int pos = _contactsArray.indexOf(c);
-
         if(pos < 0)
             return;
-
-//        if(pos == _selectedPosition){
-//            _selectedPosition = -1;
-//        } else{
-//            _selectedPosition = pos;
-//        }
         _selectedPosition = pos;
         _selectedPositionLiveData.setValue(_selectedPosition);
     }
@@ -124,6 +114,7 @@ public class ContactViewModel extends AndroidViewModel {
     public interface ShareContactModel {
         ContactViewModel shareContactModel();
     }
+
     private String contactsArrayToContactsString(ArrayList<Contact> contactsArray){
         StringBuilder r = new StringBuilder();
 
@@ -155,9 +146,6 @@ public class ContactViewModel extends AndroidViewModel {
     }
 
     public String getContactPreference(Contact c){
-//        boolean flagRememberPreferences = _pref.getBoolean("preference_cb_rememberContactsPreference",false);
-//        if(!flagRememberPreferences)
-//            return "";
         return _pref.getString(c.getName() + "_preference","");
     }
 

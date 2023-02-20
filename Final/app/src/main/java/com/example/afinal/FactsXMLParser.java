@@ -23,7 +23,7 @@ public class FactsXMLParser {
 
 	public static ArrayList<Fact> parseFacts(Context context, String factsFileType){
 		ArrayList<Fact> data = null;
-		InputStream in = openCountriesFile(context, factsFileType);
+		InputStream in = openFactsFile(context, factsFileType);
 		XmlPullParserFactory xmlFactoryObject;
 		try {
 				xmlFactoryObject = XmlPullParserFactory.newInstance();
@@ -70,7 +70,7 @@ public class FactsXMLParser {
 		return data;
 	}
 
-	private static InputStream openCountriesFile(Context context, String fileName){
+	private static InputStream openFactsFile(Context context, String fileName){
 		AssetManager assetManager = context.getAssets();
 		InputStream in =null;
 		try {

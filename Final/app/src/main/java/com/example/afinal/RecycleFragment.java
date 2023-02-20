@@ -18,13 +18,13 @@ import java.util.ArrayList;
 
 
 public class RecycleFragment extends Fragment {
-
     private ContactViewModel _model;
     private RecycleListener _listener;
 
     public RecycleFragment() {
         // Required empty public constructor
     }
+
     public static RecycleFragment newInstance() {
         RecycleFragment fragment = new RecycleFragment();
         Bundle args = new Bundle();

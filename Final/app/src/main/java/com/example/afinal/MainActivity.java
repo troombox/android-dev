@@ -24,7 +24,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceFragmentCompat;
 
 public class MainActivity extends AppCompatActivity implements ContactViewModel.ShareContactModel, ContactHistoryViewModel.ShareHistoryModel, RecycleFragment.RecycleListener {
-
     static final int REQUEST_PERMISSIONS_REQUEST_READ_CONTACTS = 0;
     static final int REQUEST_PERMISSIONS_REQUEST_SEND_SMS = 1;
     static final int REQUEST_PERMISSIONS_REQUEST_READ_SMS = 2;
@@ -38,8 +37,6 @@ public class MainActivity extends AppCompatActivity implements ContactViewModel.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
         setContentView(R.layout.activity_main);
 
         _contactHistoryViewModel = new ViewModelProvider(this).get(ContactHistoryViewModel.class);
@@ -50,20 +47,18 @@ public class MainActivity extends AppCompatActivity implements ContactViewModel.
         } else {
             ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.READ_CONTACTS},REQUEST_PERMISSIONS_REQUEST_READ_CONTACTS);
         }
-        //rewrite
+
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) == PackageManager.PERMISSION_GRANTED) {
         }
         else {
             requestPermissions(new String[] { Manifest.permission.RECEIVE_SMS }, REQUEST_PERMISSIONS_REQUEST_RECEIVE_SMS);
         }
+
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED) {
         }
         else {
             requestPermissions(new String[] { Manifest.permission.READ_SMS }, REQUEST_PERMISSIONS_REQUEST_READ_SMS);
         }
-        //
-//        DataFragment countryDataFragment = (DataFragment) getSupportFragmentManager().findFragmentByTag("CDF");
-//        FragmentContainerView fragmentContainerViewDetails = (FragmentContainerView) findViewById(R.id.fragmentContainerView);
 
         Intent intent = getIntent();
         if(intent != null){
@@ -72,11 +67,6 @@ public class MainActivity extends AppCompatActivity implements ContactViewModel.
                 finish();
             }
         }
-
-//        Intent intentSms = new Intent(this, SmsService.class);
-//        ContextCompat.startForegroundService(this, intentSms);
-
-
     }
 
     private void removeContactUpdatePrefDueToIntent(Intent intent) {
@@ -127,7 +117,6 @@ public class MainActivity extends AppCompatActivity implements ContactViewModel.
         }
         getSupportFragmentManager().executePendingTransactions();
     }
-
 
     @Override
     public ContactViewModel shareContactModel() {
@@ -187,7 +176,6 @@ public class MainActivity extends AppCompatActivity implements ContactViewModel.
                     .commit();
             getSupportFragmentManager().executePendingTransactions();
         }
-
     }
 
     public void setUpdatableViewInMain(UpdatableView uView){
@@ -198,9 +186,7 @@ public class MainActivity extends AppCompatActivity implements ContactViewModel.
         public void updateView();
     }
 
-
     public static class MyPreferences extends PreferenceFragmentCompat{
-
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View view = super.onCreateView(inflater, container, savedInstanceState);

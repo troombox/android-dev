@@ -20,7 +20,6 @@ public class ContactHistoryViewModel extends AndroidViewModel {
     private ArrayList<ContactHistory> _contactHistories;
     private MutableLiveData<ArrayList<ContactHistory>> _contactHistoriesLiveData;
 
-    //
     private final String HISTORY_FILE = "history_file";
     private SharedPreferences _pref;
     private Context _context;
@@ -110,9 +109,7 @@ public class ContactHistoryViewModel extends AndroidViewModel {
         return arrayList;
     }
 
-
     interface ShareHistoryModel{
         ContactHistoryViewModel shareHistoryModel();
     }
-
 }

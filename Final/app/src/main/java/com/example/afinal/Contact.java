@@ -59,5 +59,4 @@ public class Contact implements Comparable<Contact>, Serializable {
     public int compareTo(Contact contact) {
         return this.name.compareTo(contact.name);
     }
-
 }
