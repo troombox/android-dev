@@ -96,14 +96,15 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
                     notifyDataSetChanged();
                 }
             });
-            _parentView.setOnLongClickListener(new View.OnLongClickListener() {
+            View.OnLongClickListener _l = new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
                     _model.removeContact(c);
                     notifyDataSetChanged();
                     return true;
                 }
-            });
+            };
+            _parentView.setOnLongClickListener(_l);
         }
     }
 
