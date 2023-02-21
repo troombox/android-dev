@@ -62,8 +62,8 @@ public class MainActivity extends AppCompatActivity implements ContactViewModel.
             requestPermissions(new String[] { Manifest.permission.READ_SMS }, REQUEST_PERMISSIONS_REQUEST_READ_SMS);
         }
         //
-//        DataFragment countryDataFragment = (DataFragment) getSupportFragmentManager().findFragmentByTag("CDF");
-//        FragmentContainerView fragmentContainerViewDetails = (FragmentContainerView) findViewById(R.id.fragmentContainerView);
+        DataFragment contactDataFragment = (DataFragment) getSupportFragmentManager().findFragmentByTag("CDF");
+        FragmentContainerView fragmentContainerViewDetails = (FragmentContainerView) findViewById(R.id.fragmentContainerView);
 
         Intent intent = getIntent();
         if(intent != null){

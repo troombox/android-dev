@@ -103,6 +103,9 @@ public class ContactViewModel extends AndroidViewModel {
     }
 
     public Contact getContactByPosition(int position){
+        if(position < 0 ){
+            return _contactsArray.get(0);
+        }
         return _contactsArray.get(position);
     }
 
