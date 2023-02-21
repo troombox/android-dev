@@ -70,7 +70,6 @@ public class DataFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         _view = view;
         _fd = FactDispenser.getInstance(view.getContext());
         _model = ((ContactViewModel.ShareContactModel)(view.getContext())).shareContactModel();
@@ -100,7 +99,7 @@ public class DataFragment extends Fragment {
         view.findViewById(R.id.f_data_btn_sendSms).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext()); // Replace "context" with the actual context of your app
+                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
                 builder.setMessage("Are you sure you want to send SMS message?");
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
@@ -109,7 +108,7 @@ public class DataFragment extends Fragment {
                             Fact f;
                             String factText;
                             _contactPreference = _model.getContactPreference(_currentContact);
-                            if(_contactPreference.equals("")){
+                            if(_contactPreference.equals("")){ //first message (didn't choose preference yet)
                                 s.sendPreferencesRequestSms(_currentContact.getPhoneNumber());
                                 Toast.makeText(view.getContext(),"SMS sent", Toast.LENGTH_LONG).show();
                                 return;
@@ -127,7 +126,7 @@ public class DataFragment extends Fragment {
                             Toast.makeText(view.getContext(),"SMS sent", Toast.LENGTH_LONG).show();
                             _historyModel.saveContactHistory(_currentContactHistory);
                             _historyModel.saveContactHistories();
-                            if(_model.checkFlagAutoSend()){
+                            if(_model.checkFlagAutoSend()){ //work manager
                                 if(_contactPreference.equals("DOG")){
                                     f = _fd.getRandomFact(Fact.FACT_TYPE_DOG);
                                 } else{
@@ -152,24 +151,19 @@ public class DataFragment extends Fragment {
         });
     }
 
-
     private void enqueue(String phone, String fact){
-
         Data inputData = new Data.Builder()
                 .putString("phone",phone).putString("fact",fact)
                 .build();
-//                 Create the work request to run the worker once a week
+
         OneTimeWorkRequest workRequest = new OneTimeWorkRequest.Builder(MyWorker.class)
                 .setInitialDelay(20, TimeUnit.SECONDS)
                 .setInputData(inputData)
                 .build();
-        //        // Enqueue the work request using WorkManager
-        WorkManager.getInstance(_view.getContext()).enqueue(workRequest);
-    }
 //        PeriodicWorkRequest workRequest = new PeriodicWorkRequest.Builder(MyWorker.class, 30, TimeUnit.SECONDS)
 //                .setInitialDelay(30, TimeUnit.SECONDS)
 //                .setInputData(inputData)
 //                .build();
-//
-
+        WorkManager.getInstance(_view.getContext()).enqueue(workRequest);//Enqueue the work request using WorkManager
+    }
 }

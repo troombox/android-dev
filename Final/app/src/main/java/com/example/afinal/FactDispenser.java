@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class FactDispenser {
-
     private static FactDispenser _fd;
 
     private Context _context;

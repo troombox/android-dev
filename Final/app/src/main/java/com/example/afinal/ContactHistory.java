@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class ContactHistory implements Serializable {
-
     private Contact _c;
     private ArrayList<Integer> factIDs;
     private ArrayList<String> messages;
@@ -59,5 +58,4 @@ public class ContactHistory implements Serializable {
         }
         return st.toString();
     }
-
 }

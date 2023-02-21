@@ -14,9 +14,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 public class ContactRepository {
-
     private static ContactRepository _cr;
-
     private ArrayList<Contact> c;
     private Activity a;
 

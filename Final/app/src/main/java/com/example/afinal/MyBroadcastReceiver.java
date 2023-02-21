@@ -6,15 +6,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.SmsMessage;
 import android.widget.Toast;
-
 import java.util.Locale;
 
 public class MyBroadcastReceiver extends BroadcastReceiver {
 
-
     @Override
     public void onReceive(Context context, Intent intent) {
-
         Bundle data = intent.getExtras();
         Object[] pdus = (Object[]) data.get("pdus");
         for(int i=0; i<pdus.length; i++){
@@ -40,6 +37,5 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
             newIntent.setAction("com.example.afinal.ACTION_REMOVE_CONTACT");
             context.startActivity(newIntent);
         }
-
     }
 }

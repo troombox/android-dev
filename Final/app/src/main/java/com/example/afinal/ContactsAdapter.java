@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHolder> implements MainActivity.UpdatableView {
-
     private ContactViewModel _model;
     private List<Contact> _contacts;
     private int _pos;
@@ -75,7 +74,6 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
 
     /* ViewHolder class - sets the data for individual item lines in the list */
     public class ViewHolder extends RecyclerView.ViewHolder{
-
         private View _parentView;
         private TextView _contactNameTextView;
         private TextView _contactPhoneNumberTextView;
